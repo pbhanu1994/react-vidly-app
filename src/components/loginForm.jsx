@@ -9,10 +9,26 @@ class Login extends Component {
     }
   };
 
+  validateProperty = ({ name, value }) => {
+    if (name === "username") {
+      // return value.trim() === "" && "Username is required";
+      if (value.trim() === "") return "Username is required";
+    }
+    if (name === "password") {
+      // return value.trim() === "" && "Password is required";
+      if (value.trim() === "") return "Password is required";
+    }
+  };
+
   handleChange = ({ currentTarget: input }) => {
+    const errors = { ...this.state.errors };
+    const errorMessage = this.validateProperty(input);
+    if (errorMessage) errors[input.name] = errorMessage;
+    else delete errors[input.name];
+
     const account = { ...this.state.account };
     account[input.name] = input.value;
-    this.setState({ account });
+    this.setState({ account, errors });
   };
 
   //Creating Ref for form elements
@@ -26,9 +42,9 @@ class Login extends Component {
     const errors = {};
     const { account } = this.state;
     if (account.username.trim() === "")
-      errors.username = "Username is Required";
+      errors.username = "Username is required";
     if (account.password.trim() === "")
-      errors.password = "Password is Required";
+      errors.password = "Password is required";
 
     return Object.keys(errors).length === 0 ? null : errors;
   }
@@ -38,8 +54,7 @@ class Login extends Component {
     e.preventDefault();
 
     const errors = this.validate();
-    console.log(errors);
-    this.setState({ errors });
+    this.setState({ errors: errors || {} });
     if (errors) return;
 
     //Call the Server
@@ -49,7 +64,7 @@ class Login extends Component {
   };
 
   render() {
-    const { account } = this.state;
+    const { account, errors } = this.state;
     return (
       <div>
         <h1>Login Form</h1>
@@ -59,12 +74,14 @@ class Login extends Component {
             value={account.username}
             label="Username"
             onChange={this.handleChange}
+            error={errors.username}
           />
           <Input
             name="password"
             value={account.password}
             label="Password"
             onChange={this.handleChange}
+            error={errors.password}
           />
           <button className="btn-primary btn-lg">Login</button>
         </form>
