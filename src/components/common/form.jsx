@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./inputForm";
+import Select from "./selectOption";
 
 class Form extends Component {
   state = { data: {}, errors: {} };
@@ -49,7 +50,6 @@ class Form extends Component {
     //   errors.username = "Username is required";
     // if (data.password.trim() === "")
     //   errors.password = "Password is required";
-
     return Object.keys(errors).length === 0 ? null : errors;
   }
 
@@ -66,14 +66,6 @@ class Form extends Component {
     // const username = this.username.current.value;
   };
 
-  renderButton(label) {
-    return (
-      <button disabled={this.validate()} className="btn-primary btn-lg">
-        {label}
-      </button>
-    );
-  }
-
   renderInput(name, label, type = "text") {
     const { data, errors } = this.state;
     return (
@@ -85,6 +77,28 @@ class Form extends Component {
         onChange={this.handleChange}
         error={errors[name]}
       />
+    );
+  }
+
+  renderSelect(name, label, list) {
+    const { data, errors } = this.state;
+    return (
+      <Select
+        name={name}
+        label={label}
+        list={list}
+        onChange={this.handleChange}
+        value={data[name]}
+        error={errors[name]}
+      />
+    );
+  }
+
+  renderButton(label) {
+    return (
+      <button disabled={this.validate()} className="btn-primary btn-lg">
+        {label}
+      </button>
     );
   }
 }
