@@ -3,17 +3,20 @@ import { Route, Redirect, Switch } from "react-router-dom";
 import NewMovieForm from "./components/NewMovieForm";
 import Customers from "./components/customers";
 import Rentals from "./components/rentals";
+import { ToastContainer } from "react-toastify";
 import NotFound from "./components/notFound";
 import Movies from "./components/movies";
 import NavBar from "./components/navbar";
 import Login from "./components/loginForm";
 import Register from "./components/registerForm";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 class App extends Component {
   render() {
     return (
       <main className="container">
+        <ToastContainer />
         <NavBar />
         <Switch>
           {/* <Route path="/movies/:id" component={MovieForm} /> */}
