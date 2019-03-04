@@ -101,6 +101,8 @@ class Movies extends Component {
   };
 
   render() {
+    const { user } = this.props;
+
     const {
       movies: allMovies,
       pageSize,
@@ -127,9 +129,11 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          <Link className="btn btn-primary" to="/movies/new">
-            New Movie
-          </Link>
+          {user && (
+            <Link className="btn btn-primary" to="/movies/new">
+              New Movie
+            </Link>
+          )}
           <h5 className="m-2">
             {allMovies.length > 0 &&
               `Showing ${totalCount} movies in the database`}

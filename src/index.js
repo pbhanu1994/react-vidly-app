@@ -8,6 +8,8 @@ import "font-awesome/css/font-awesome.css";
 // import Movies from "./components/movies";
 import { BrowserRouter } from "react-router-dom";
 
+console.log("SPIDERMAN", process.env);
+
 ReactDOM.render(
   <BrowserRouter>
     {/* <Movies /> */}
