@@ -113,10 +113,6 @@ class Movies extends Component {
       searchField
     } = this.state;
 
-    const count = allMovies.length;
-
-    if (count === 0) return <h5>There are no movies found</h5>;
-
     const { totalCount, data: movies } = this.getPageData();
 
     return (
