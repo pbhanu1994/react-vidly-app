@@ -32,9 +32,9 @@ class Customers extends Component {
 
   handleDelete = async customer => {
     const originalCustomers = this.state.customers;
-    originalCustomers.filter(c => c._id !== customer._id);
+    const customers = originalCustomers.filter(c => c._id !== customer._id);
 
-    this.setState({ customers: originalCustomers });
+    this.setState({ customers });
     try {
       await deleteCustomer(customer._id);
     }
