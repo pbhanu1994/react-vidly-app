@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getCustomers, deleteCustomer } from '../services/customerService';
+import { getClasses } from '../services/classService';
 import MemberClass from './memberClass';
 import SearchBox from './common/searchBox';
 import CustomersTable from './customersTable';
@@ -21,17 +22,12 @@ class Customers extends Component {
   }
 
   async componentDidMount() {
-    const getMemberClasses = this.getMemberClasses();
-    const memberClasses = [{ _id: "", class: "All Member Classes"}, ...getMemberClasses];
+    const { data } = await getClasses();
     const { data: customers } = await getCustomers();
+    const memberClasses = [{ _id: "", name: "All Classes"}, ...data];
+    console.log("Customers:", customers);
+    console.log("Member classes:", memberClasses);
     this.setState({ customers, memberClasses });
-  }
-
-  getMemberClasses = () => {
-    const classes = [
-      {_id: "gold", class: "Gold"}
-    ];
-    return classes;
   }
 
   handleDelete = async customer => {
@@ -51,7 +47,7 @@ class Customers extends Component {
   }
 
   handleCustomerClass = memberClass => {
-    console.log(`Class: ${memberClass.class}`);
+    console.log(`Class: ${memberClass.name}`);
     this.setState({ currentMemberClass: memberClass, searchField: "", currentPage: 1 });
   }
 
@@ -86,7 +82,7 @@ class Customers extends Component {
         c.name.toLowerCase().startsWith(searchField.toLowerCase())
       );
     else if(currentMemberClass && currentMemberClass._id)
-        filteredCustomers = allCustomers.filter(c => c._id === currentMemberClass._id);
+        filteredCustomers = allCustomers.filter(c => c.class._id === currentMemberClass._id);
 
     const sorted = _.orderBy(
       filteredCustomers,
@@ -96,10 +92,10 @@ class Customers extends Component {
 
     const customers = paginate(sorted, currentPage, pageSize);
 
-    return { totalCount: customers.length, data: customers };
+    return { totalCount: filteredCustomers.length, data: customers };
   }
 
-  render() { 
+  render() {
     const { user } = this.props;
     const { 
       customers: allCustomers,

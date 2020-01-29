@@ -10,8 +10,8 @@ class CustomersTable extends Component {
             label: "Name",
             content: customer => <Link to={`/customers/${customer._id}`}>{customer.name}</Link>
         },
-        { path: "customer.phone", label: "Phone" },
-        { path: "customer.isGold", label: "Class" },
+        { path: "class.name", label: "Class" },
+        { path: "phone", label: "Phone" }
     ];
     deleteColumn = {
         key: "delete",
@@ -35,7 +35,7 @@ class CustomersTable extends Component {
         const { customers, onSort, sortColumn } = this.props;
 
         return (
-            <Table 
+            <Table
                 columns={this.columns}
                 onSort={onSort}
                 sortColumn={sortColumn}

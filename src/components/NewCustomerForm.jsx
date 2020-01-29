@@ -1,11 +1,12 @@
 import React from 'react';
 import Form from "./common/form";
-import { Joi } from 'joi-browser';
-import { getCustomers, getCustomer, saveCustomer } from '../services/customerService';
+import { getCustomer, saveCustomer } from '../services/customerService';
+import { getClasses } from '../services/classService';
+import Joi from 'joi-browser';
 
 class NewContactForm extends Form {
     state = { 
-        data: { name: "", isGold: false, phone: "" },
+        data: { name: "", classId: "", phone: "" },
         customerClasses: [],
         errors: {}
      }
@@ -15,21 +16,17 @@ class NewContactForm extends Form {
         name: Joi.string()
                 .required()
                 .label('Name'),
-        isGold: Joi.boolean()
-                .required(),
+        classId: Joi.string()
+                .required()
+                .label("Class"),
         phone: Joi.string()
                 .required()
                 .label('Phone'),
     };
 
     async populateCustomerClasses() {
-        const { data: customers } = await getCustomers();
-        console.log("Customer Classes", getCustomers);
-        let customerClasses = [];
-        customers.map(customer => 
-           customer.isGold === true ? customerClasses.push("Gold") : "");
-
-       this.setState({ customerClasses });
+        const { data: customerClasses } = await getClasses();
+        this.setState({ customerClasses });
     }
 
      async populateCustomer() {
@@ -50,14 +47,14 @@ class NewContactForm extends Form {
 
      async componentDidMount() {
          await this.populateCustomer();
-         this.populateCustomerClasses();
+         await this.populateCustomerClasses();
      }
 
      mapToViewModel(customer) {
         return {
             _id: customer._id,
             name: customer.name,
-            isGold: customer.isGold,
+            classId: customer.classId,
             phone: customer.phone
         }
     }

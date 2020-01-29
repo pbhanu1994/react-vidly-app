@@ -27,7 +27,7 @@ const MemberClass = ({
 }
 
 MemberClass.defaultProps = {
-    textProperty: "class",
+    textProperty: "name",
     valueProperty: "_id"
 }
 
