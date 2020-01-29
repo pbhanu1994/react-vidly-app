@@ -138,6 +138,7 @@ class Movies extends Component {
             name="searchField"
             value={searchField}
             onChange={this.handleSearch}
+            placeholder="Movie"
           />
           <MoviesTable
             movies={movies}
