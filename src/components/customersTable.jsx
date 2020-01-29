@@ -17,7 +17,7 @@ class CustomersTable extends Component {
         key: "delete",
         content: customer => (
             <button 
-                onClick={this.props.onDelete(customer)}
+                onClick={() => this.props.onDelete(customer)}
                 className="btn btn-danger"
             >
                 Delete
