@@ -20,7 +20,7 @@ class NewContactForm extends Form {
         phone: Joi.string()
                 .required()
                 .label('Phone'),
-    }
+    };
 
     async populateCustomerClasses() {
         const { data: customers } = await getCustomers();
