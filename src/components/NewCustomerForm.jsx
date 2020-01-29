@@ -54,7 +54,7 @@ class NewContactForm extends Form {
         return {
             _id: customer._id,
             name: customer.name,
-            classId: customer.classId,
+            classId: customer.class._id,
             phone: customer.phone
         }
     }
@@ -71,7 +71,7 @@ class NewContactForm extends Form {
                 <h1>Customer Form</h1>
                 <form onSubmit={this.handleSubmit}>
                     {this.renderInput("name", "Name")}
-                    {this.renderSelect("memberClass", "Class", this.state.customerClasses)}
+                    {this.renderSelect("classId", "Class", this.state.customerClasses)}
                     {this.renderInput("phone","Phone")}
                     {this.renderButton("Save")}
                 </form>
